@@ -3,7 +3,10 @@ python3 main.py images/22112023203029_cam_box_side_1_box.jpg
 '''
 import sys
 import cv2
+import time
 import numpy as np
+
+start_time = time.time()
 
 # Init
 img_path = sys.argv[1]
@@ -67,3 +70,6 @@ img_heatmap = cv2.applyColorMap(img_norm, cv2.COLORMAP_JET)
 # Export
 out = cv2.addWeighted(img,0.5,img_heatmap,0.5,0.0)
 cv2.imwrite('out.jpg',out)
+
+end_time = time.time() - start_time
+print('elapsed time:',end_time)
