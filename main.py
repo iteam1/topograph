@@ -10,8 +10,8 @@ img_path = sys.argv[1]
 BLUR_KERNEL = 3
 MIN_THRESH = 100
 MAX_THRESH = 200
-BOX_SIZE = 30
-CUT_OFF = 0.7 # threshold = CUT_OFF * MAX_VAL
+BOX_SIZE = 20
+CUT_OFF = 0.8 # threshold = CUT_OFF * MAX_VAL
 
 # Read image
 img = cv2.imread(img_path)
