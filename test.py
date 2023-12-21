@@ -1,5 +1,5 @@
 '''
-python3 run.py images/7.jpg
+python3 main.py images/7.jpg
 '''
 import sys
 import cv2
@@ -54,30 +54,21 @@ MEAN_VAL = ground.mean()
 MIN_VAL = ground.min()
 MAX_VAL = ground.max()
 D = MAX_VAL - MIN_VAL
+THRESHOLD_VAL = int(CUT_OFF * D)
+print(ground.shape, MIN_VAL, MAX_VAL, D, MEAN_VAL, THRESHOLD_VAL)
 
-mask = np.zeros_like(edges)
+#ground[ground < THRESHOLD_VAL] = 0
 
 norm_ground = ground / D
-mask[norm_ground > CUT_OFF] = (255)
+print(norm_ground.shape, norm_ground.min(), norm_ground.max())
 img_norm = norm_ground * 255
 img_norm = img_norm.astype(np.uint8)
-img_heatmap = cv2.applyColorMap(img_norm, cv2.COLORMAP_JET) # Heatmap
 
-# find contours for overlap
-blank = np.zeros_like(edges)
-contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-for cnt in contours:
-    x,y,w,h = cv2.boundingRect(cnt)
-    cv2.rectangle(blank,(x,y),(x+w,y+h),(255),-1)
-    
-contours, hierarchy = cv2.findContours(blank, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-# find the biggest countour (c) by the area
-c = max(contours, key = cv2.contourArea)
-x,y,w,h = cv2.boundingRect(c)
-cv2.rectangle(img,(x,y),(x+w,y+h),(255),5)
+# Heatmap
+img_heatmap = cv2.applyColorMap(img_norm, cv2.COLORMAP_JET)
 
 # Export
-out = cv2.addWeighted(img,0.8,img_heatmap,0.2,0.0)
+out = cv2.addWeighted(img,0.5,img_heatmap,0.5,0.0)
 cv2.imwrite('out.jpg',out)
 
 end_time = time.time() - start_time
