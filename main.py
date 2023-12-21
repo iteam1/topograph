@@ -1,6 +1,3 @@
-'''
-python3 run.py images/7.jpg
-'''
 import sys
 import cv2
 import time

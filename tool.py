@@ -1,6 +1,3 @@
-'''
-python3 tool.py images/1.jpg
-'''
 import cv2
 import sys
 import numpy as np
